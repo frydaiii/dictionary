@@ -1,4 +1,4 @@
-package translate;
+package offline.speech;
 
 import javax.sound.sampled.AudioInputStream;
 import marytts.LocalMaryInterface;
@@ -12,12 +12,14 @@ public class Voice
 	private MaryInterface marytts;
 	private AudioPlayer ap;
 
-	public Voice(String voiceName)
+	public Voice()
 	{
+		String voiceName = "cmu-slt-hsmm";
 		try
 		{
 			marytts = new LocalMaryInterface();
 			marytts.setVoice(voiceName);
+
 			ap = new AudioPlayer();
 		}
 		catch (MaryConfigurationException ex)
@@ -26,7 +28,7 @@ public class Voice
 		}
 	}
 
-	public void say(String input)
+	public void Say(String input)
 	{
 		try
 		{
@@ -39,5 +41,13 @@ public class Voice
 		{
 			System.err.println("Error saying phrase.");
 		}
+	}
+
+	public static void main(String[] args) {
+		/**
+		 * Test code goes here.*/
+
+		Voice voice = new Voice();
+		voice.Say("hey buddy, how are you today?");
 	}
 }
