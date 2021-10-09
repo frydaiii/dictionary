@@ -1,4 +1,4 @@
-package oop.dictionary.dictionary;
+package oop.dictionary;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

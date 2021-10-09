@@ -1,4 +1,4 @@
-package oop.dictionary.dictionary;
+package oop.dictionary;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;

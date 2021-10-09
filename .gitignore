@@ -1,4 +1,6 @@
-.idea
+.idea/
 dictionary.iml
-out
-log
+out/
+log/
+target/
+src/main/java/online.microsoft/Constant.java
