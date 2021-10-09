@@ -3,4 +3,4 @@ dictionary.iml
 out/
 log/
 target/
-src/main/java/online.microsoft/Constant.java
+src/main/java/online/microsoft/Constant.java
