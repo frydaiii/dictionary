@@ -9,8 +9,12 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Scanner;
 
 public class Speech {
 
@@ -50,6 +54,21 @@ public class Speech {
         return voicesOfThisLang.toArray(result);
     }
 
+    public static String GetSpeechCode(String langCode) throws FileNotFoundException {
+        File myObj = new File(System.getProperty("user.dir") + "/src/main/java/online/microsoft/SpeechCode.json");
+        Scanner sc = new Scanner(myObj);
+        String data = "";
+        while (sc.hasNextLine()) {
+            data += sc.nextLine();
+        }
+        HashMap<String, String> codeMap = new Gson().fromJson(data, new TypeToken<HashMap<String, String>>(){}.getType());
+        if (codeMap.containsKey(langCode)) {
+            return codeMap.get(langCode);
+        } else {
+            return "";
+        }
+    }
+
     /**
      * Synthesize to speaker output.*/
     public static void Say(String lang, String text) {
@@ -69,7 +88,9 @@ public class Speech {
             /**
              * Test code goes here.*/
 
-            Say("en-US", "hey buddy, how are you today?");
+//            Say("en-US", "hey buddy, how are you today?");
+//            Say("vi-VN", "xin chào");
+            System.out.println(GetSpeechCode("vi"));
         } catch (Exception e) {
             System.out.println(e);
         }
