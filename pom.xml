@@ -92,7 +92,7 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>oop.dictionary.dictionary/oop.dictionary.HelloApplication</mainClass>
+                            <mainClass>oop.dictionary.Start</mainClass>
                         </configuration>
                     </execution>
                 </executions>
