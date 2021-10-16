@@ -1,27 +1,52 @@
 package oop.dictionary;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 
 import online.microsoft.Translator;
 
-public class OnlineTab {
-    @FXML
-    private TextField input;
+import java.util.HashMap;
+import java.util.TreeMap;
+import java.util.logging.Handler;
 
-    @FXML
-    private TextField output;
+public class OnlineTab {
+    @FXML private TextField input;
+    @FXML private TextField output;
+    @FXML private ComboBox srcLangsMenu = new ComboBox();
+    @FXML private ComboBox destLangsMenu = new ComboBox();
+
+    public void initialize() {
+        Translator trans = new Translator();
+        try {
+            TreeMap<String, String> langs = new TreeMap<String, String>(trans.GetSupportedLanguages());
+            srcLangsMenu.getItems().addAll(langs.keySet());
+            srcLangsMenu.getSelectionModel().selectFirst();
+            destLangsMenu.getItems().addAll(langs.keySet());
+            destLangsMenu.getSelectionModel().selectFirst();
+        } catch (Exception e) {
+        }
+    }
 
     @FXML
     protected void onTranslateButtonClick() {
-        Translator trans = new Translator();
-        String sourceText = input.getText();
-        String destText = "";
+        output.setText("");
+        String resultText = "";
         try {
-            destText = trans.newRequest("en", "vi", sourceText);
+            Translator trans = new Translator();
+            HashMap<String, String> langs = trans.GetSupportedLanguages();
+
+            String srcLang = srcLangsMenu.getValue().toString();
+            String srcLangCode = langs.get(srcLang);
+
+            String destLang = destLangsMenu.getValue().toString();
+            String destLangCode = langs.get(destLang);
+
+            String srcText = input.getText();
+            resultText = trans.newRequest(srcLangCode, destLangCode, srcText);
         } catch (Exception e) {
-            destText = "Error";
+            resultText = "Error";
         }
-        output.setText(destText);
+        output.setText(resultText);
     }
 }
