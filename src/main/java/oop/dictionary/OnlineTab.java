@@ -2,6 +2,7 @@ package oop.dictionary;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
 import javafx.scene.text.Text;
@@ -12,8 +13,8 @@ import java.util.HashMap;
 import java.util.TreeMap;
 
 public class OnlineTab {
-    @FXML private TextField input;
-    @FXML private TextField output;
+    @FXML private TextArea input;
+    @FXML private TextArea output;
     @FXML private ComboBox srcLangsMenu = new ComboBox();
     @FXML private ComboBox destLangsMenu = new ComboBox();
     @FXML private Text inputInfo;
@@ -56,6 +57,7 @@ public class OnlineTab {
 
     @FXML
     protected void onInputSpeakButtonClick() {
+        inputInfo.setText("");
         try {
             HashMap<String, String> langs = trans.GetSupportedLanguages();
             String langCode = langs.get(srcLangsMenu.getValue());
@@ -63,7 +65,7 @@ public class OnlineTab {
             if (speechCode == "") {
                 inputInfo.setText("This language does not support speech.");
             } else {
-                speaker.Say(speechCode,input.getText());
+                speaker.Say(speechCode, input.getText());
             }
         } catch (Exception e) {
         }
@@ -71,6 +73,7 @@ public class OnlineTab {
 
     @FXML
     protected void onOutputSpeakButtonClick() {
+        outputInfo.setText("");
         try {
             HashMap<String, String> langs = trans.GetSupportedLanguages();
             String langCode = langs.get(destLangsMenu.getValue());
@@ -78,7 +81,7 @@ public class OnlineTab {
             if (speechCode == "") {
                 outputInfo.setText("This language does not support speech.");
             } else {
-                speaker.Say(speechCode,output.getText());
+                speaker.Say(speechCode, output.getText());
             }
         } catch (Exception e) {
         }
