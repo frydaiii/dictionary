@@ -4,13 +4,18 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1" fx:controller="oop.dictionary.OnlineTab">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="oop.dictionary.OnlineTab">
    <children>
-      <TextField fx:id="input" layoutX="29.0" layoutY="64.0" prefHeight="318.0" prefWidth="201.0" />
+      <TextField fx:id="input" layoutX="29.0" layoutY="64.0" prefHeight="287.0" prefWidth="201.0" />
       <Button layoutX="269.0" layoutY="188.0" mnemonicParsing="false" onAction="#onTranslateButtonClick" text="Button" />
-      <TextField fx:id="output" editable="false" layoutX="363.0" layoutY="58.0" prefHeight="318.0" prefWidth="201.0" />
+      <TextField fx:id="output" editable="false" layoutX="363.0" layoutY="58.0" prefHeight="293.0" prefWidth="201.0" />
       <ComboBox fx:id="srcLangsMenu" layoutX="29.0" layoutY="14.0" prefHeight="24.0" prefWidth="201.0" />
       <ComboBox fx:id="destLangsMenu" layoutX="363.0" layoutY="14.0" prefHeight="24.0" prefWidth="201.0" />
+      <Button fx:id="playInputAudio" layoutX="172.0" layoutY="362.0" mnemonicParsing="false" onAction="#onInputSpeakButtonClick" text="Speak" />
+      <Button fx:id="playOutputAudio" layoutX="506.0" layoutY="362.0" mnemonicParsing="false" onAction="#onOutputSpeakButtonClick" text="Speak" />
+      <Text fx:id="inputInfo" layoutX="29.0" layoutY="371.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="137.33740234375" />
+      <Text fx:id="outputInfo" layoutX="363.0" layoutY="371.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="137.33740234375" />
    </children>
 </AnchorPane>
