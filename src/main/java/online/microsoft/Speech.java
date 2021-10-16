@@ -20,7 +20,7 @@ public class Speech {
 
     /**
      * This function return all supported voices.*/
-    public static VoiceDescription[] GetVoicesList() throws IOException {
+    public VoiceDescription[] GetVoicesList() throws IOException {
         // Instantiates the OkHttpClient.
         OkHttpClient client = new OkHttpClient();
 
@@ -37,7 +37,7 @@ public class Speech {
     /**
      * This function return supported voice of a language,
      * specific by its language code.*/
-    public static VoiceDescription[] GetVoicesList(String langCode) throws IOException {
+    public VoiceDescription[] GetVoicesList(String langCode) throws IOException {
         VoiceDescription[] voices = GetVoicesList();
         ArrayList<VoiceDescription> voicesOfThisLang = new ArrayList<VoiceDescription>();
 
@@ -54,7 +54,7 @@ public class Speech {
         return voicesOfThisLang.toArray(result);
     }
 
-    public static String GetSpeechCode(String langCode) throws FileNotFoundException {
+    public String GetSpeechCode(String langCode) throws FileNotFoundException {
         File myObj = new File(System.getProperty("user.dir") + "/src/main/java/online/microsoft/SpeechCode.json");
         Scanner sc = new Scanner(myObj);
         String data = "";
@@ -71,7 +71,7 @@ public class Speech {
 
     /**
      * Synthesize to speaker output.*/
-    public static void Say(String lang, String text) {
+    public void Say(String lang, String text) {
         SpeechConfig speechConfig = SpeechConfig
                 .fromSubscription(Constant.SpeechSubscriptionKey, Constant.Location);
         AudioConfig audioConfig = AudioConfig.fromDefaultSpeakerOutput();
@@ -88,9 +88,9 @@ public class Speech {
             /**
              * Test code goes here.*/
 
-//            Say("en-US", "hey buddy, how are you today?");
-//            Say("vi-VN", "xin chào");
-            System.out.println(GetSpeechCode("vi"));
+            Speech speaker = new Speech();
+
+            speaker.Say("en-US", "hey buddy, how are you today?");
         } catch (Exception e) {
             System.out.println(e);
         }
