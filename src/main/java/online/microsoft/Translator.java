@@ -40,8 +40,8 @@ public class Translator {
 
     /**
      * This function get supported languages from Microsoft.
-     * Return result in <language code, LanguageDescription> format*/
-    public HashMap<String, LanguageDescription> GetSupportedLanguages() throws IOException {
+     * Return result in <language, code> format*/
+    public HashMap<String, String> GetSupportedLanguages() throws IOException {
         // Instantiates the OkHttpClient.
         OkHttpClient client = new OkHttpClient();
 
@@ -51,7 +51,12 @@ public class Translator {
                 .build();
         Response response = client.newCall(request).execute();
         Languages langs = new Gson().fromJson(response.body().string(), new TypeToken<Languages>(){}.getType());
-        return langs.translation;
+
+        HashMap<String, String> result = new HashMap<String, String>();
+        for (String code: langs.translation.keySet()) {
+            result.put(langs.translation.get(code).name, code);
+        }
+        return result;
     }
 
     public static void main(String[] args) {
@@ -60,8 +65,7 @@ public class Translator {
              * Test code goes here.*/
 
             Translator translator = new Translator();
-            String response = translator.newRequest("en", "vi", "hey brother");
-            System.out.println(response);
+            System.out.println(translator.GetSupportedLanguages());
 
         } catch (Exception e) {
             System.out.println(e);
