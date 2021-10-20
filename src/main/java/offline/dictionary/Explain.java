@@ -1,12 +1,12 @@
 package offline.dictionary;
 
-public class Expalain {
+public class Explain {
     private String detail;
     private String keyWord;
 
-    public Expalain() {}
+    public Explain() {}
 
-    public Expalain(String keyWord, String detail) {
+    public Explain(String keyWord, String detail) {
         this.keyWord = keyWord;
         this.detail = detail;
     }

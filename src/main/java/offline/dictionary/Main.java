@@ -10,18 +10,6 @@ public class Main {
         dictionary.ReadFileEN_VN();
 
         // tìm kiếm từ Hello
-//        Expalain ex = dictionary.LookUpEN_VN("hello");
-//        System.out.println(ex.getDetail());
-
-        // test chức năng dự đoán từ
-        AutoComplete autoComplete = new AutoComplete();
-        // Đưa các keyWord trong Dictionary vào trieNote
-        autoComplete.addWord();
-        // dự đoán các từ với string "th" đầu vào và numCompletions là giới hạn số lượng số từ dự đoán ỉn ra theo thứ tự
-        List<String> listAutoComplete = autoComplete.predictCompletions("th", 5);
-        for (String i: listAutoComplete) {
-            System.out.println(i);
-        }
-        //
+        System.out.println(dictionary.LookUpEN_VN("A A A").getDetail());
     }
 }
