@@ -11,28 +11,34 @@ public class Dictionary {
     public final String password = "";
     public final String url = "jdbc:sqlite:edict.db";
     public final String sql = "SELECT * FROM edict";
-    public HashMap<String,Expalain> ListEN_VN = new HashMap<String, Expalain>();
-    public List<WordOther> listWordOther = new ArrayList<WordOther>();
-    public List<History> historyEN = new ArrayList<History>();
-    public List<String> listKeyEN_VN = new ArrayList<String>();
     public final int MAX = 20;
+    // Chứa tất cả các keyWord, và Object Expalian
+    public HashMap<String, Explain> ListEN_VN = new HashMap<String, Explain>();
+    // Chứa danh sách các từ Like, Dislike
+    public List<WordOther> listWordOther = new ArrayList<WordOther>();
+    // Chứa History
+    public List<History> historyEN = new ArrayList<History>();
+    //Chỉ chứa keyWord các từ
+    public List<String> listKeyEN_VN = new ArrayList<String>();
+
 
 
     /**
+     * Gọi hàm này trong lúc chương trình khởi động để load ra database vào HashMap ListEN_VN
      * Lấy data từ database field2 là word, field3 là detail phần in ra theo dạng HTML nên
      * có thể dùng javaFX in ra
      */
     public void ReadFileEN_VN() {
-        Expalain temp;
+        Explain temp;
         try {
             Connection connection = DriverManager.getConnection(url, user, password);
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(sql);
 
             while(resultSet.next()) {
-                temp = new Expalain(resultSet.getString("field2"), resultSet.getString("field3"));
-                listKeyEN_VN.add(temp.getKeyWord());
-                ListEN_VN.put(temp.getKeyWord(), temp);
+                temp = new Explain(resultSet.getString("field2"), resultSet.getString("field3"));
+                listKeyEN_VN.add(temp.getKeyWord().toLowerCase());
+                ListEN_VN.put(temp.getKeyWord().toLowerCase(), temp);
             }
 
             statement.close();
@@ -44,38 +50,25 @@ public class Dictionary {
     }
 
     /**
-     * XỬ LÝ PHẦN TÌM KIẾM
-     * if(keyWord exist) -> Expalain
-     * else @return 1 list 20 keyWord giống với keyWord cần tìm
+     * tìm từ cần thiết
      * @param keyWord
+     * @return Object Explain
      */
-    public List<String> searchSimilar(String keyWord) {
-        List<String> temp = new ArrayList<String>();
-        int count = 0;
-        for(int i = 0; i < temp.size(); i++){
-            if(listKeyEN_VN.get(i).startsWith(keyWord) == true){
-                count++;
-                temp.add(listKeyEN_VN.get(i));
-            }
-            if(count >= MAX){
-                break;
-            }
-        }
 
-        return temp;
-    }
-
-    //Tim kiem tu can thiet
-    public Expalain LookUpEN_VN(String keyWord) {
-        return ListEN_VN.get(keyWord);
+    public Explain LookUpEN_VN(String keyWord) {
+        return ListEN_VN.get(keyWord.toLowerCase());
     }
 
     /**
      * XỬ LÝ CÁC CHỨC NĂNG LIKE, DISLIKE
-     *
+     * các thuộc tính trong Object WordOther
      */
 
-    // check like word
+    /**
+     * kiểm tra các từ like, lưu trữ vào listWordOther
+     * Ví dụ có một người đánh dấu từ Hello là thích thì thuộc tính LIKE sẽ đc set là true
+     * @param keyWord
+     */
     public void CheckLIKE(String keyWord){
         // Not in list OtherWord
         if(checkExist(keyWord) == -1){
@@ -89,7 +82,10 @@ public class Dictionary {
         }
     }
 
-    // check dislike word
+    /**
+     * tương tự check LIKE
+     * @param keyWord
+     */
     public void CheckDISLIKE(String keyWord){
         // Not in list OtherWord
         if(checkExist(keyWord) == -1) {
@@ -103,6 +99,11 @@ public class Dictionary {
         }
     }
 
+    /**
+     * (Không quan trọng lắm)
+     * Hàm này bổ trợ cho 2 ham checkLIKE và checkDISLIKE
+     * @param keyWord
+     */
     // check exist of word in list
     // return index key in listWordOther
     public int checkExist(String keyWord){
@@ -115,7 +116,12 @@ public class Dictionary {
         return -1;
     }
 
-    // Save ListWordOther to File
+    /**
+     * Lưu lại những từ đc set LIKE or DISLIKE
+     * Việc lưu danh sách từ ra file để lần sử dụng chương trình sau có thể
+     * truy vấn lại các từ này
+     */
+    // Save ListWordOther to File("wordOtherEn_VN")
     public void SaveFileListWordOther() {
         ObjectOutputStream out = null;
         try {
@@ -140,6 +146,10 @@ public class Dictionary {
         }
     }
 
+    /**
+     * đọc dữ liệu từ file txt này để biết danh sách các từ LIKE or DISLIKE.
+     * Việc này nên lm cùng lúc với đọc file database
+     */
     // Read listWordOther from file
     public void ReadFileListWordOther() {
         ObjectInputStream in = null;
@@ -178,21 +188,21 @@ public class Dictionary {
     /**
      * XỬ LÝ PHẦN THÊM SỬA XÓA
      */
-    //DELETE WORD
+    //DELETE WORD (Chỉ xóa trong HashMap)
     public void deleteWord(String keyWord) {
         ListEN_VN.remove(keyWord);
     }
 
-    //ADD NEW WORD
+    //ADD NEW WORD (Cũng chỉ thêm vào trong HashMap, chỉ thêm vào theo form cố định)
     public void addNewWord(String keyWord, String attribute, String meaning, String pronounce) {
         String detail = "<C><F><I><N><Q>@" + keyWord + " /" + pronounce + "/<br />*  " + attribute + "<br />- "
                 + meaning + "</Q></N></I></F></C>";
-        Expalain temp = new Expalain(keyWord, detail);
+        Explain temp = new Explain(keyWord, detail);
 
         ListEN_VN.put(keyWord, temp);
     }
 
-    //UPDATE WORD
+    //UPDATE WORD (cũng chỉ xử lý trong hashMap)
     public void updateWord(String keyWord, String attribute, String meaning, String pronounce) {
         deleteWord(keyWord);
         addNewWord(keyWord, attribute, meaning, pronounce);
@@ -200,6 +210,7 @@ public class Dictionary {
 
     /**
      * XỬ LÝ PHẦN LỊCH SỬ TRA CỨU
+     * Khá giống phần LIKE, DISLIKE nhưng chưa xử lý chức năng History, chỉ làm sẵn hàm lưu trữ
      */
     // SAVE FILE HISTORY SEARCH
     public void SaveHistory() {
@@ -212,8 +223,7 @@ public class Dictionary {
                 out.writeObject(historyEN.get(i));
             }
             out.close();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             System.out.println("SaveFile error!!!" + e.toString());
         } finally {
             try {
@@ -234,8 +244,7 @@ public class Dictionary {
         try {
             in = new ObjectInputStream(new FileInputStream("historyEN.txt"));
 
-        }
-        catch(IOException e) {
+        } catch(IOException e) {
             System.out.println("Notfound!!!");
         }
 
@@ -246,8 +255,7 @@ public class Dictionary {
             }
 
             in.close();
-        }
-        catch(Exception e) {
+        } catch(Exception e) {
             System.out.println("ReadFile Error!!!");
         } finally {
             if(in != null) {

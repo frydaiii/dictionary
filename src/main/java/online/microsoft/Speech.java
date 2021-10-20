@@ -9,14 +9,18 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Scanner;
 
 public class Speech {
 
     /**
      * This function return all supported voices.*/
-    public static VoiceDescription[] GetVoicesList() throws IOException {
+    public VoiceDescription[] GetVoicesList() throws IOException {
         // Instantiates the OkHttpClient.
         OkHttpClient client = new OkHttpClient();
 
@@ -33,7 +37,7 @@ public class Speech {
     /**
      * This function return supported voice of a language,
      * specific by its language code.*/
-    public static VoiceDescription[] GetVoicesList(String langCode) throws IOException {
+    public VoiceDescription[] GetVoicesList(String langCode) throws IOException {
         VoiceDescription[] voices = GetVoicesList();
         ArrayList<VoiceDescription> voicesOfThisLang = new ArrayList<VoiceDescription>();
 
@@ -50,9 +54,24 @@ public class Speech {
         return voicesOfThisLang.toArray(result);
     }
 
+    public String GetSpeechCode(String langCode) throws FileNotFoundException {
+        File myObj = new File(System.getProperty("user.dir") + "/src/main/java/online/microsoft/SpeechCode.json");
+        Scanner sc = new Scanner(myObj);
+        String data = "";
+        while (sc.hasNextLine()) {
+            data += sc.nextLine();
+        }
+        HashMap<String, String> codeMap = new Gson().fromJson(data, new TypeToken<HashMap<String, String>>(){}.getType());
+        if (codeMap.containsKey(langCode)) {
+            return codeMap.get(langCode);
+        } else {
+            return "";
+        }
+    }
+
     /**
      * Synthesize to speaker output.*/
-    public static void Say(String lang, String text) {
+    public void Say(String lang, String text) {
         SpeechConfig speechConfig = SpeechConfig
                 .fromSubscription(Constant.SpeechSubscriptionKey, Constant.Location);
         AudioConfig audioConfig = AudioConfig.fromDefaultSpeakerOutput();
@@ -69,7 +88,9 @@ public class Speech {
             /**
              * Test code goes here.*/
 
-            Say("en-US", "hey buddy, how are you today?");
+            Speech speaker = new Speech();
+
+            speaker.Say("en-US", "hey buddy, how are you today?");
         } catch (Exception e) {
             System.out.println(e);
         }

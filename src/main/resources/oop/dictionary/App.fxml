@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+
+<TabPane maxHeight="630.0" maxWidth="900.0" minHeight="630.0" minWidth="900.0" prefHeight="630.0" prefWidth="900.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1" fx:controller="oop.dictionary.OnlineTab">
+  <tabs>
+      <Tab fx:id="offlineTab" text="OfflineTab">
+          <fx:include fx:id="onlineTabPage" source="OfflineTab.fxml" />
+      </Tab>
+      <Tab fx:id="onlineTab" text="OnlineTab">
+          <fx:include fx:id="offlineTabPage" source="OnlineTab.fxml" />
+      </Tab>
+  </tabs>
+</TabPane>
