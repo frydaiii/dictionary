@@ -5,6 +5,10 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Class này chỉ làm chức năng gợi ý các keyWord từ các từ đã nhập.
+ * Sau khi đã tìm ra từ cần dịch thì cần gọi hàm LookUpEN_VN của class Dictionary để lấy nghĩa
+ */
 public class AutoComplete {
     private TrieNode root;
     private int size;

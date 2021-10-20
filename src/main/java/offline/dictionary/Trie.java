@@ -1,5 +1,9 @@
 package offline.dictionary;
 
+/**
+ * PHẦN NÀY KHÔNG QUAN TRONG, VIẾT RA ĐỂ PHỤC VỤ CHO CLASS AutoComplete
+ */
+
 import java.util.HashMap;
 import java.util.Set;
 
