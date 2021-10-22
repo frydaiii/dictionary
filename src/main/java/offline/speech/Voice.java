@@ -48,6 +48,6 @@ public class Voice
 		 * Test code goes here.*/
 
 		Voice voice = new Voice();
-		voice.Say("hey buddy, how are you today?");
+		voice.Say("hello");
 	}
 }

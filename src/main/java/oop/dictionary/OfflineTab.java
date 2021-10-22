@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.web.WebView;
 import offline.dictionary.Dictionary;
+import offline.speech.Voice;
 import org.controlsfx.control.textfield.TextFields;
 
 import java.util.stream.Collectors;
@@ -33,9 +34,15 @@ public class OfflineTab {
         } catch (Exception e) {
             output.getEngine().loadContent("Không tìm thấy từ khóa.");
         }
-//        if (!dict.LookUpEN_VN(srcText).getDetail().equals("")) {
-//        } else {
-//            output.getEngine().loadContent("Không tìm thấy từ khóa.");
-//        }
+    }
+
+    @FXML
+    public void onSpeakButtonClick() {
+        try {
+            Voice voice = new Voice();
+            voice.Say(input.getText());
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 }

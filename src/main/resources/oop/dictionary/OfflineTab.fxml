@@ -6,17 +6,22 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.web.WebView?>
 
-<AnchorPane maxHeight="600.0" maxWidth="900.0" minHeight="600.0" minWidth="900.0" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1" fx:controller="oop.dictionary.OfflineTab">
+<AnchorPane maxHeight="600.0" maxWidth="900.0" minHeight="600.0" minWidth="900.0" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="oop.dictionary.OfflineTab">
    <children>
       <Button fx:id="translateButton" layoutX="790.0" layoutY="15.0" mnemonicParsing="false" onAction="#onTranslateButtonClick" prefHeight="32.0" prefWidth="90.0" text="Translate">
          <font>
             <Font size="14.0" />
          </font></Button>
-      <WebView fx:id="output" layoutX="32.0" layoutY="77.0" prefHeight="508.0" prefWidth="848.0" />
+      <WebView fx:id="output" layoutX="32.0" layoutY="77.0" prefHeight="508.0" prefWidth="735.0" />
       <TextField fx:id="input" layoutX="29.0" layoutY="15.0" prefHeight="32.0" prefWidth="735.0">
          <font>
             <Font size="15.0" />
          </font>
       </TextField>
+      <Button layoutX="790.0" layoutY="77.0" mnemonicParsing="false" onAction="#onSpeakButtonClick" prefHeight="28.0" prefWidth="90.0" text="Speak">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>
