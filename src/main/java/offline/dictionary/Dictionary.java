@@ -7,19 +7,20 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Dictionary {
-    public final String user = "root";
-    public final String password = "";
-    public final String url = "jdbc:sqlite:edict.db";
-    public final String sql = "SELECT * FROM edict";
-    public final int MAX = 20;
+    public static final String user = "root";
+    public static final String password = "";
+    public static final String url = "jdbc:sqlite:edict.db";
+    public static final String sql = "SELECT * FROM edict";
+
     // Chứa tất cả các keyWord, và Object Expalian
+
     public HashMap<String, Explain> ListEN_VN = new HashMap<String, Explain>();
     // Chứa danh sách các từ Like, Dislike
-    public List<WordOther> listWordOther = new ArrayList<WordOther>();
+    public static List<WordOther> listWordOther = new ArrayList<WordOther>();
     // Chứa History
-    public List<History> historyEN = new ArrayList<History>();
+    public static List<History> historyEN = new ArrayList<History>();
     //Chỉ chứa keyWord các từ
-    public List<String> listKeyEN_VN = new ArrayList<String>();
+    public static List<String> listKeyEN_VN = new ArrayList<String>();
 
 
 
@@ -50,14 +51,13 @@ public class Dictionary {
     }
 
     /**
-     * tìm từ cần thiết
-     * @param keyWord
-     * @return Object Explain
+     * Xử lý phần tìm kiếm
      */
-
     public Explain LookUpEN_VN(String keyWord) {
         return ListEN_VN.get(keyWord.toLowerCase());
     }
+
+
 
     /**
      * XỬ LÝ CÁC CHỨC NĂNG LIKE, DISLIKE
@@ -188,18 +188,69 @@ public class Dictionary {
     /**
      * XỬ LÝ PHẦN THÊM SỬA XÓA
      */
-    //DELETE WORD (Chỉ xóa trong HashMap)
+    //DELETE WORD
     public void deleteWord(String keyWord) {
+        String sqlLocal = "DELETE FROM edict WHERE field2 = ?";
+
+        if (!listKeyEN_VN.contains(keyWord)) {
+            System.out.println("Từ không có trong từ điển");
+        }
+        //Remove ra khỏi listKey and hashMap
         ListEN_VN.remove(keyWord);
+        listKeyEN_VN.remove(keyWord);
+
+        //Remove from database
+        try {
+            Connection connection = DriverManager.getConnection(url, user, password);
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlLocal);
+
+            preparedStatement.setString(1, keyWord);
+            preparedStatement.executeUpdate();
+
+            System.out.println("Success");
+            preparedStatement.close();
+            connection.close();
+        } catch (SQLException e) {
+            System.out.println("Error");
+            e.printStackTrace();
+        }
+
     }
 
     //ADD NEW WORD (Cũng chỉ thêm vào trong HashMap, chỉ thêm vào theo form cố định)
     public void addNewWord(String keyWord, String attribute, String meaning, String pronounce) {
+        String sqlLocal = "INSERT INTO edict values (?,?,?)";
+
+        // Tạo form nhập
         String detail = "<C><F><I><N><Q>@" + keyWord + " /" + pronounce + "/<br />*  " + attribute + "<br />- "
                 + meaning + "</Q></N></I></F></C>";
         Explain temp = new Explain(keyWord, detail);
 
+        //KT từ có tồn tại trong DB ko?
+        if (listKeyEN_VN.contains(keyWord)) {
+            System.out.println("Từ đã có trong từ điển");
+            return;
+        }
+        // Thêm vào hashmap
         ListEN_VN.put(keyWord, temp);
+        listKeyEN_VN.add(keyWord);
+
+        // Thêm vào Database
+        try {
+            Connection connection = DriverManager.getConnection(url, user, password);
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlLocal);
+
+            preparedStatement.setString(2, keyWord);
+            preparedStatement.setString(3, detail);
+            preparedStatement.executeUpdate();
+
+            System.out.println("Success");
+            preparedStatement.close();
+            connection.close();
+        } catch (SQLException e) {
+            System.out.println("Error");
+            e.printStackTrace();
+        }
     }
 
     //UPDATE WORD (cũng chỉ xử lý trong hashMap)
