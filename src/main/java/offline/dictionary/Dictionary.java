@@ -5,7 +5,6 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 
 public class Dictionary {
     public static final String user = "root";
@@ -14,7 +13,8 @@ public class Dictionary {
     public static final String sql = "SELECT * FROM edict";
 
     // Chứa tất cả các keyWord, và Object Expalian
-    public static HashMap<String,Expalain> ListEN_VN = new HashMap<String, Expalain>();
+
+    public HashMap<String, Explain> ListEN_VN = new HashMap<String, Explain>();
     // Chứa danh sách các từ Like, Dislike
     public static List<WordOther> listWordOther = new ArrayList<WordOther>();
     // Chứa History
@@ -30,14 +30,14 @@ public class Dictionary {
      * có thể dùng javaFX in ra
      */
     public void ReadFileEN_VN() {
-        Expalain temp;
+        Explain temp;
         try {
             Connection connection = DriverManager.getConnection(url, user, password);
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(sql);
 
             while(resultSet.next()) {
-                temp = new Expalain(resultSet.getString("field2"), resultSet.getString("field3"));
+                temp = new Explain(resultSet.getString("field2"), resultSet.getString("field3"));
                 listKeyEN_VN.add(temp.getKeyWord().toLowerCase());
                 ListEN_VN.put(temp.getKeyWord().toLowerCase(), temp);
             }
@@ -53,8 +53,7 @@ public class Dictionary {
     /**
      * Xử lý phần tìm kiếm
      */
-    // Tìm kiếm khi điền đúng từ
-    public Expalain LookUpEN_VN(String keyWord) {
+    public Explain LookUpEN_VN(String keyWord) {
         return ListEN_VN.get(keyWord.toLowerCase());
     }
 
@@ -225,7 +224,7 @@ public class Dictionary {
         // Tạo form nhập
         String detail = "<C><F><I><N><Q>@" + keyWord + " /" + pronounce + "/<br />*  " + attribute + "<br />- "
                 + meaning + "</Q></N></I></F></C>";
-        Expalain temp = new Expalain(keyWord, detail);
+        Explain temp = new Explain(keyWord, detail);
 
         //KT từ có tồn tại trong DB ko?
         if (listKeyEN_VN.contains(keyWord)) {
