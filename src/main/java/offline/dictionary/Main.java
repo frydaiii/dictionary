@@ -11,11 +11,7 @@ public class Main {
 
         dictionary.addNewWord("aothatday", "test", "just for test", "Tung");
 
-        String result = dictionary.fixLookUp("helo");
 
-        if (result != null) {
-            System.out.println(result);
-        }
 
         // tìm kiếm từ Hello
 //        Expalain ex = dictionary.LookUpEN_VN("nome");

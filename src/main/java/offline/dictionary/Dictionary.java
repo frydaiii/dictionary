@@ -12,7 +12,7 @@ public class Dictionary {
     public static final String password = "";
     public static final String url = "jdbc:sqlite:edict.db";
     public static final String sql = "SELECT * FROM edict";
-    public static final int MAX = 20;
+
     // Chứa tất cả các keyWord, và Object Expalian
     public static HashMap<String,Expalain> ListEN_VN = new HashMap<String, Expalain>();
     // Chứa danh sách các từ Like, Dislike
