@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="600.0" maxWidth="900.0" minHeight="600.0" minWidth="900.0" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1" fx:controller="oop.dictionary.OfflineTab">
+    <children>
+        <Button layoutX="784.0" layoutY="73.0" mnemonicParsing="false" onAction="#backScreen" prefHeight="32.0" prefWidth="90.0" text="Back">
+            <font>
+                <Font size="14.0" />
+            </font></Button>
+        <Label layoutX="36.0" layoutY="24.0" prefHeight="42.0" prefWidth="215.0" text="Nhập từ cần thêm/sửa" />
+        <TextField fx:id="inputAdd" layoutX="36.0" layoutY="68.0" prefHeight="42.0" prefWidth="704.0">
+            <font>
+                <Font size="15.0" />
+            </font>
+        </TextField>
+        <Label layoutX="36.0" layoutY="131.0" prefHeight="42.0" prefWidth="215.0" text="Thêm nghĩa của nó" />
+        <TextField fx:id="outputAdd" layoutX="36.0" layoutY="175.0" prefHeight="117.0" prefWidth="704.0" />
+      <Label layoutX="36.0" layoutY="292.0" prefHeight="42.0" prefWidth="215.0" text="Thêm attribute" />
+      <TextField fx:id="attributeAdd" layoutX="36.0" layoutY="336.0" prefHeight="117.0" prefWidth="704.0" />
+      <Label layoutX="36.0" layoutY="467.0" prefHeight="42.0" prefWidth="215.0" text="Thêm pronounce" />
+      <TextField fx:id="pronounceAdd" layoutX="36.0" layoutY="517.0" prefHeight="42.0" prefWidth="704.0" />
+      <Button layoutX="784.0" layoutY="175.0" mnemonicParsing="false" onAction="#submitAdd" prefHeight="31.0" prefWidth="90.0" text="Submit" />
+    </children>
+</AnchorPane>

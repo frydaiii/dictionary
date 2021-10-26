@@ -16,11 +16,11 @@ public class Dictionary {
 
     public HashMap<String, Explain> ListEN_VN = new HashMap<String, Explain>();
     // Chứa danh sách các từ Like, Dislike
-    public static List<WordOther> listWordOther = new ArrayList<WordOther>();
+    public List<WordOther> listWordOther = new ArrayList<WordOther>();
     // Chứa History
-    public static List<History> historyEN = new ArrayList<History>();
+    public List<History> historyEN = new ArrayList<History>();
     //Chỉ chứa keyWord các từ
-    public static List<String> listKeyEN_VN = new ArrayList<String>();
+    public List<String> listKeyEN_VN = new ArrayList<String>();
 
 
 
@@ -189,15 +189,21 @@ public class Dictionary {
      * XỬ LÝ PHẦN THÊM SỬA XÓA
      */
     //DELETE WORD
-    public void deleteWord(String keyWord) {
+    public void deleteWord(String keyWord) throws Exception{
         String sqlLocal = "DELETE FROM edict WHERE field2 = ?";
 
         if (!listKeyEN_VN.contains(keyWord)) {
-            System.out.println("Từ không có trong từ điển");
+//            System.out.println("Từ không có trong từ điển");
+            throw new Exception("Từ không có trong từ điển");
         }
         //Remove ra khỏi listKey and hashMap
         ListEN_VN.remove(keyWord);
-        listKeyEN_VN.remove(keyWord);
+//        listKeyEN_VN.remove(keyWord);
+        for (int i = 0; i < listKeyEN_VN.size(); i++) {
+            if (listKeyEN_VN.get(i).equals(keyWord)) {
+                listKeyEN_VN.remove(i);
+            }
+        }
 
         //Remove from database
         try {
@@ -207,18 +213,19 @@ public class Dictionary {
             preparedStatement.setString(1, keyWord);
             preparedStatement.executeUpdate();
 
-            System.out.println("Success");
+            System.out.println("Success Deleting");
             preparedStatement.close();
             connection.close();
         } catch (SQLException e) {
-            System.out.println("Error");
+            System.out.println("Error while deleting keyword on database");
             e.printStackTrace();
         }
 
     }
 
     //ADD NEW WORD (Cũng chỉ thêm vào trong HashMap, chỉ thêm vào theo form cố định)
-    public void addNewWord(String keyWord, String attribute, String meaning, String pronounce) {
+    public void addNewWord(String keyWord, String attribute, String meaning, String pronounce)
+        throws Exception {
         String sqlLocal = "INSERT INTO edict values (?,?,?)";
 
         // Tạo form nhập
@@ -227,9 +234,9 @@ public class Dictionary {
         Explain temp = new Explain(keyWord, detail);
 
         //KT từ có tồn tại trong DB ko?
-        if (listKeyEN_VN.contains(keyWord)) {
-            System.out.println("Từ đã có trong từ điển");
-            return;
+        if (LookUpEN_VN(keyWord) != null) {
+//            System.out.println("Từ đã có trong từ điển");
+            throw new Exception("Từ đã có trong từ điển");
         }
         // Thêm vào hashmap
         ListEN_VN.put(keyWord, temp);
@@ -244,7 +251,7 @@ public class Dictionary {
             preparedStatement.setString(3, detail);
             preparedStatement.executeUpdate();
 
-            System.out.println("Success");
+            System.out.println("Success Adding");
             preparedStatement.close();
             connection.close();
         } catch (SQLException e) {
@@ -254,7 +261,7 @@ public class Dictionary {
     }
 
     //UPDATE WORD (cũng chỉ xử lý trong hashMap)
-    public void updateWord(String keyWord, String attribute, String meaning, String pronounce) {
+    public void updateWord(String keyWord, String attribute, String meaning, String pronounce) throws Exception {
         deleteWord(keyWord);
         addNewWord(keyWord, attribute, meaning, pronounce);
     }

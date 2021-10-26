@@ -87,10 +87,11 @@ public class Speech {
         try {
             /**
              * Test code goes here.*/
+            SpeechConfig speechConfig = SpeechConfig.fromSubscription(Constant.SpeechSubscriptionKey, Constant.Location);
+            AudioConfig audioConfig = AudioConfig.fromDefaultSpeakerOutput();
 
-            Speech speaker = new Speech();
-
-            speaker.Say("en-US", "hey buddy, how are you today?");
+            SpeechSynthesizer synthesizer = new SpeechSynthesizer(speechConfig, audioConfig);
+            synthesizer.SpeakText("Synthesizing directly to speaker output.");
         } catch (Exception e) {
             System.out.println(e);
         }

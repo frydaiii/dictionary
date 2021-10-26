@@ -9,11 +9,7 @@ public class Main {
         Dictionary dictionary = new Dictionary();
         dictionary.ReadFileEN_VN();
 
-        dictionary.addNewWord("aothatday", "test", "just for test", "Tung");
+//        dictionary.addNewWord("aothatday", "test", "just for test", "Tung");
 
-
-
-        // tìm kiếm từ Hello
-        System.out.println(dictionary.LookUpEN_VN("A A A").getDetail());
     }
 }

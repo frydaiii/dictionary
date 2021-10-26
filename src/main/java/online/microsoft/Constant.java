@@ -5,7 +5,7 @@ public class Constant {
     public static final String GetSupportedVoicesURL = "https://eastasia.tts.speech.microsoft.com/cognitiveservices/voices/list";
 
     public static final String TranslatorSubscriptionKey = "c119bb098a0149fa9b5d26a05757bba9";
-    public static final String SpeechSubscriptionKey = "2fa31bfd66944be6b14c05be0e04845f";
+    public static final String SpeechSubscriptionKey = "a2ed02d148204c9592227b49a0fc44e7";
 
     /**
      * Add location, also known as region. The default is global.
