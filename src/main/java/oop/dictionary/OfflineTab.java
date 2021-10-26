@@ -80,6 +80,13 @@ public class OfflineTab {
         alert.show();
     }
 
+    private void validationAlert() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Thông báo");
+        alert.setContentText("Nhập đầy đủ các trường có dấu *");
+        alert.show();
+    }
+
     @FXML
     public void submitAdd(){
         String inputTextAdd = inputAdd.getText();
@@ -89,6 +96,11 @@ public class OfflineTab {
         String pronounceTextAdd = pronounceAdd.getText();
         String attributeTextAdd = attributeAdd.getText();
 //        System.out.println(dict.LookUpEN_VN(inputTextAdd).getDetail());
+
+        if (inputTextAdd.equals("") || outputTextAdd.equals("")) {
+            validationAlert();
+            return;
+        }
 
         if(!checkExist) {
             try {

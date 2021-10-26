@@ -12,16 +12,16 @@
             <font>
                 <Font size="14.0" />
             </font></Button>
-        <Label layoutX="36.0" layoutY="24.0" prefHeight="42.0" prefWidth="215.0" text="Nhập từ cần thêm/sửa" />
+        <Label layoutX="36.0" layoutY="24.0" prefHeight="42.0" prefWidth="215.0" text="Nhập từ cần thêm/sửa (*)" />
         <TextField fx:id="inputAdd" layoutX="36.0" layoutY="68.0" prefHeight="42.0" prefWidth="704.0">
             <font>
                 <Font size="15.0" />
             </font>
         </TextField>
-        <Label layoutX="36.0" layoutY="131.0" prefHeight="42.0" prefWidth="215.0" text="Thêm nghĩa của nó" />
-        <TextField fx:id="outputAdd" layoutX="36.0" layoutY="175.0" prefHeight="117.0" prefWidth="704.0" />
+        <Label layoutX="36.0" layoutY="131.0" prefHeight="42.0" prefWidth="215.0" text="Thêm nghĩa của nó (*)" />
+        <TextField fx:id="outputAdd" alignment="TOP_LEFT" layoutX="36.0" layoutY="175.0" prefHeight="117.0" prefWidth="704.0" />
       <Label layoutX="36.0" layoutY="292.0" prefHeight="42.0" prefWidth="215.0" text="Thêm attribute" />
-      <TextField fx:id="attributeAdd" layoutX="36.0" layoutY="336.0" prefHeight="117.0" prefWidth="704.0" />
+      <TextField fx:id="attributeAdd" alignment="TOP_LEFT" layoutX="36.0" layoutY="336.0" prefHeight="117.0" prefWidth="704.0" />
       <Label layoutX="36.0" layoutY="467.0" prefHeight="42.0" prefWidth="215.0" text="Thêm pronounce" />
       <TextField fx:id="pronounceAdd" layoutX="36.0" layoutY="517.0" prefHeight="42.0" prefWidth="704.0" />
       <Button layoutX="784.0" layoutY="175.0" mnemonicParsing="false" onAction="#submitAdd" prefHeight="31.0" prefWidth="90.0" text="Submit" />
